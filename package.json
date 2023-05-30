@@ -1,5 +1,5 @@
 {
-  "name": "ga4node",
+  "name": "@ntnbrtnkv/ga4node",
   "version": "0.0.5",
   "description": "An Open-Source Google Analytics 4 Client-Side Protocol Implementation",
   "main": "dist/ga4mp.min.js",
