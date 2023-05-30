@@ -10,10 +10,10 @@
 */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.ga4mp = factory());
-})(this, (function () { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('https')) :
+  typeof define === 'function' && define.amd ? define(['https'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.ga4mp = factory(global.req));
+})(this, (function (req) { 'use strict';
 
   function _extends() {
     _extends = Object.assign ? Object.assign.bind() : function (target) {
@@ -30,7 +30,7 @@
     return _extends.apply(this, arguments);
   }
 
-  require('debug')('ga4node');
+  var debug = require('debug')('ga4node');
   var trim = function trim(str, chars) {
     if (typeof str === 'string') {
       return str.substring(0, chars);
@@ -58,6 +58,9 @@
     var env;
     if (typeof window !== 'undefined' && typeof window.document !== 'undefined') env = 'browser';else if (typeof process !== 'undefined' && process.versions != null && process.versions.node != null) env = 'node';
     return env;
+  };
+  var log = function log() {
+    debug.log.apply(debug, arguments);
   };
 
   /**
@@ -176,9 +179,6 @@
   };
   var ecommerceEvents = ['add_payment_info', 'add_shipping_info', 'add_to_cart', 'remove_from_cart', 'view_cart', 'begin_checkout', 'select_item', 'view_item_list', 'select_promotion', 'view_promotion', 'purchase', 'refund', 'view_item', 'add_to_wishlist'];
 
-  var _require = require('./helpers'),
-    log = _require.log;
-  var req = require('https');
   var sendRequest = function sendRequest(endpoint, payload) {
     var mode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'browser';
     var opts = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};

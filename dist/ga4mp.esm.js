@@ -1,4 +1,6 @@
-require('debug')('ga4node');
+import req from 'https';
+
+const debug = require('debug')('ga4node');
 
 const trim = (str, chars) => {
     if (typeof str === 'string') {
@@ -31,6 +33,10 @@ const getEnvironment = () => {
     )
         env = 'node';
     return env
+};
+
+const log = (...data) => {
+    debug.log(...data);
 };
 
 /**
@@ -164,9 +170,6 @@ const ecommerceEvents = [
     'view_item',
     'add_to_wishlist',
 ];
-
-const { log } = require('./helpers');
-const req = require('https');
 
 const sendRequest = (endpoint, payload, mode = 'browser', opts = {}) => {
     const qs = new URLSearchParams(
