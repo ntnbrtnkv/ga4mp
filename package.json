@@ -1,5 +1,5 @@
 {
-  "name": "@analytics-debugger/ga4mp",
+  "name": "ga4node",
   "version": "0.0.5",
   "description": "An Open-Source Google Analytics 4 Client-Side Protocol Implementation",
   "main": "dist/ga4mp.min.js",
@@ -60,6 +60,7 @@
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-terser": "^0.2.0",
+    "debug": "^4.3.4",
     "rollup": "^3.7.1",
     "rollup-plugin-license": "^3.0.1"
   }

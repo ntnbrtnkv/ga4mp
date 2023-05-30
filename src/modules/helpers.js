@@ -1,3 +1,5 @@
+const debug = require('debug')('ga4node');
+
 export const trim = (str, chars) => {
     if (typeof str === 'string') {
         return str.substring(0, chars)
@@ -32,14 +34,9 @@ export const getEnvironment = () => {
         env = 'node'
     return env
 }
-/**
- * Logger Function
- * @param {string} message
- * @param {object} data
- */
 
-export const log = (message, data) => {
-    console.log('[GA4MP-LOG]', message, data)
+export const log = (...data) => {
+    debug.log(...data)
 }
 
 /**

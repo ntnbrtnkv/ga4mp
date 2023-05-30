@@ -1,3 +1,6 @@
+const { log } = require('./helpers');
+const req = require('https');
+
 export const sendRequest = (endpoint, payload, mode = 'browser', opts = {}) => {
     const qs = new URLSearchParams(
         JSON.parse(JSON.stringify(payload))
@@ -5,16 +8,16 @@ export const sendRequest = (endpoint, payload, mode = 'browser', opts = {}) => {
     if (mode === 'browser') {
         navigator?.sendBeacon([endpoint, qs].join('?'))
     } else {
-        const scheme = endpoint.split('://')[0]
-        const req = require(scheme)
         const options = {
             headers: {
                 'User-Agent': opts.user_agent 
             },
             timeout: 500,
-        }        
+        }
+        const url = [endpoint, qs].join('?');
+        log('Sending request', url);
         const request = req
-            .get([endpoint, qs].join('?'), options, (resp) => {
+            .get(url, options, (resp) => {
                 let data = ''
                 resp.on('data', (chunk) => {
                     data += chunk
@@ -24,7 +27,7 @@ export const sendRequest = (endpoint, payload, mode = 'browser', opts = {}) => {
                 })
             })
             .on('error', (err) => {
-                console.log('Error: ' + err.message)
+                log('Error: ' + err.message)
             })
         request.on('timeout', () => {
             request.destroy()

@@ -1,3 +1,5 @@
+require('debug')('ga4node');
+
 const trim = (str, chars) => {
     if (typeof str === 'string') {
         return str.substring(0, chars)
@@ -163,6 +165,9 @@ const ecommerceEvents = [
     'add_to_wishlist',
 ];
 
+const { log } = require('./helpers');
+const req = require('https');
+
 const sendRequest = (endpoint, payload, mode = 'browser', opts = {}) => {
     const qs = new URLSearchParams(
         JSON.parse(JSON.stringify(payload))
@@ -170,16 +175,16 @@ const sendRequest = (endpoint, payload, mode = 'browser', opts = {}) => {
     if (mode === 'browser') {
         navigator?.sendBeacon([endpoint, qs].join('?'));
     } else {
-        const scheme = endpoint.split('://')[0];
-        const req = require(scheme);
         const options = {
             headers: {
                 'User-Agent': opts.user_agent 
             },
             timeout: 500,
-        };        
+        };
+        const url = [endpoint, qs].join('?');
+        log('Sending request', url);
         const request = req
-            .get([endpoint, qs].join('?'), options, (resp) => {
+            .get(url, options, (resp) => {
                 resp.on('data', (chunk) => {
                 });
                 resp.on('end', () => {
@@ -187,7 +192,7 @@ const sendRequest = (endpoint, payload, mode = 'browser', opts = {}) => {
                 });
             })
             .on('error', (err) => {
-                console.log('Error: ' + err.message);
+                log('Error: ' + err.message);
             });
         request.on('timeout', () => {
             request.destroy();
@@ -195,7 +200,7 @@ const sendRequest = (endpoint, payload, mode = 'browser', opts = {}) => {
     }
 };
 
-const clientHints = (mode) => { 
+const clientHints = (mode) => {
     if (mode === 'node' || typeof(window) === 'undefined' ||  typeof(window) !== 'undefined' && !('navigator' in window)) {
         return new Promise((resolve) => {
             resolve(null);

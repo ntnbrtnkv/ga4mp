@@ -45,6 +45,7 @@ Temporary Items
 
 # Editor files
 .idea
+.vscode
 
 # Node modules
 node_modules

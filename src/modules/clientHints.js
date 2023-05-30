@@ -1,4 +1,4 @@
-const clientHints = (mode) => { 
+const clientHints = (mode) => {
     if (mode === 'node' || typeof(window) === 'undefined' ||  typeof(window) !== 'undefined' && !('navigator' in window)) {
         return new Promise((resolve) => {
             resolve(null)
