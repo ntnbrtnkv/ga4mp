@@ -9,7 +9,7 @@
 *
 */
 
-define(['https'], (function (req) { 'use strict';
+define((function () { 'use strict';
 
   function _extends() {
     _extends = Object.assign ? Object.assign.bind() : function (target) {
@@ -56,7 +56,7 @@ define(['https'], (function (req) { 'use strict';
     return env;
   };
   var log = function log() {
-    debug.log.apply(debug, arguments);
+    debug.apply(void 0, arguments);
   };
 
   /**
@@ -175,6 +175,7 @@ define(['https'], (function (req) { 'use strict';
   };
   var ecommerceEvents = ['add_payment_info', 'add_shipping_info', 'add_to_cart', 'remove_from_cart', 'view_cart', 'begin_checkout', 'select_item', 'view_item_list', 'select_promotion', 'view_promotion', 'purchase', 'refund', 'view_item', 'add_to_wishlist'];
 
+  var req = require('https');
   var sendRequest = function sendRequest(endpoint, payload) {
     var mode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'browser';
     var opts = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};

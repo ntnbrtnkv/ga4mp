@@ -36,7 +36,7 @@ export const getEnvironment = () => {
 }
 
 export const log = (...data) => {
-    debug.log(...data)
+    debug(...data)
 }
 
 /**

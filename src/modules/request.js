@@ -1,5 +1,5 @@
 import { log } from './helpers';
-import req from 'https';
+const req = require('https');
 
 export const sendRequest = (endpoint, payload, mode = 'browser', opts = {}) => {
     const qs = new URLSearchParams(
